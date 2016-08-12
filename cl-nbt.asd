@@ -3,10 +3,10 @@
 (asdf:defsystem #:cl-nbt
   :description "Library for parsing Minecraft's binary files."
   :author "Andy Page"
-  :license "TBC"
+  :license "MIT"
   :depends-on (#:alexandria
                #:ieee-floats
-               #:babel         ; #:flexi-streams
+               #:babel
                #:chipz
                #:salza2
                #:cl-fad)
