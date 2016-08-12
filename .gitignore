@@ -1,0 +1,9 @@
+*~
+#*#
+*.fasl
+*.FASL
+*.lisp-temp
+*.[oa]
+*.mca
+*.dat
+*.bak
