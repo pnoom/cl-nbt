@@ -71,7 +71,7 @@
 	 (write-si1 stream sector-count))
     (loop
        for timestamp across timestamps
-       do(write-si4 stream timestamp))
+       do (write-si4 stream timestamp))
     (write-si4 stream len-chunk-data)
     (write-si1 stream compression-type)))
 

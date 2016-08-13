@@ -3,7 +3,8 @@
 (in-package #:cl-nbt)
 
 (defun read-unsigned-int (s size &key (endian :big))
-  "Read an unsigned integer of size bytes. Adapted from binary-types."
+  "Read an unsigned integer of SIZE bytes from stream S.
+   Adapted from binary-types library."
   (let ((unsigned-value 0))
     (if (= 1 size)
         (setf unsigned-value (read-byte s nil nil))
@@ -20,14 +21,16 @@
     unsigned-value))
 
 (defun read-signed-int (s size &key (endian :big))
-  "Read a signed integer of size bytes. Adapted from binary-types."
+  "Read a signed integer of SIZE bytes from stream S.
+   Adapted from binary-types library."
   (let ((unsigned-value (read-unsigned-int s size :endian endian)))
     (if (>= unsigned-value (ash 1 (1- (* 8 size))))
         (- unsigned-value (ash 1 (* 8 size)))
         unsigned-value)))
 
 (defun write-int (s n size &key (endian :big))
-  "Write a (signed or unsigned) integer of size bytes. Adapted from binary-types."
+  "Write a (signed or unsigned) integer N of SIZE bytes to stream S.
+   Adapted from binary-types library."
   (if (= 1 size)
       (write-byte n s)
       (ecase endian

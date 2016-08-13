@@ -50,6 +50,18 @@
   (setf (payload tag) (read-f8 stream))
   tag)
 
+;; Simple version (not compatible with .mca files)
+
+#|
+(defmethod read-payload (stream (tag tag-byte-array))
+  (let* ((len (read-si4 stream))
+         (arr (make-array len))) ;specify element type?
+    (dotimes (i len)
+      (setf (aref arr i) (read-si1 stream)))
+    (setf (payload tag) arr))
+  tag)
+|#
+
 ;; See the anomaly in the region file spec:
 ;; https://minecraft.gamepedia.com/Chunk_format#Block_format
 
@@ -174,6 +186,16 @@
 (defmethod write-payload (stream (tag tag-double))
   (write-f8 stream (payload tag)))
 
+;; Simple version (not compatible with .mca files)
+
+#|
+(defmethod write-payload (stream (tag tag-byte-array))
+  (write-si4 stream (length (payload tag)))
+  (write-sequence (payload tag) stream))
+|#
+
+;; See comment above tag-byte-array's read-payload method
+
 (defmethod write-payload (stream (tag tag-byte-array))
   (cond ((member (name tag)
 		 '("BlockLight" "SkyLight" "Add" "Data")
@@ -235,7 +257,4 @@
                                          :element-type '(unsigned-byte 8))
     (write-tag temp tag)
     (file-position temp 0)
-    (let ((seq (make-array (file-length temp)
-                           :element-type '(unsigned-byte 8))))
-      (read-sequence seq temp)
-      seq)))
+    (slurp-binary temp (file-length temp))))
