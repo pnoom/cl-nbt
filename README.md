@@ -73,7 +73,7 @@ NBT spec will clear up any confusion. Some things to note:
   follow though.
   
 - AFAIK the compression ratio of data compressed by the `salza2` library (see
-  [here](https://xach.com/lisp/salza2/) is lower than that of the data
+  [here](https://xach.com/lisp/salza2/)) is lower than that of the data
   compressed by Minecraft, so the files written by `cl-nbt` may be slightly
   larger than the originals. There's no way to change the ratio at the moment,
   unfortunately. For `.dat` files this is no problem, but it may prove

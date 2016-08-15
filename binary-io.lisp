@@ -78,16 +78,11 @@
     (condition ()
       (write-si8 s n))))
 
-(defun slurp-binary (stream size)
-  "Return a sequence of length size containing bytes read from stream."
-  (let ((seq (make-array size
-                         :element-type '(unsigned-byte 8)
-                         :fill-pointer t)))
-    (setf (fill-pointer seq) (read-sequence seq stream))
-    seq))
-
 (defun read-utf-8-string (s length)
-  (let ((seq (slurp-binary s length)))
+  (let ((seq (make-array length
+			 :element-type '(unsigned-byte 8)
+			 :fill-pointer t)))
+    (setf (fill-pointer seq) (read-sequence seq s))
     (handler-case
 	(babel:octets-to-string seq :encoding :utf-8)
       (condition () seq))))

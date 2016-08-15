@@ -257,4 +257,7 @@
                                          :element-type '(unsigned-byte 8))
     (write-tag temp tag)
     (file-position temp 0)
-    (slurp-binary temp (file-length temp))))
+    (let ((seq (make-array (file-length temp)
+			   :element-type '(unsigned-byte 8))))
+      (read-sequence seq temp)
+      seq)))
